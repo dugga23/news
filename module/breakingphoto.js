@@ -1,0 +1,26 @@
+const mongoose = require('mongoose');
+
+const {Schema}= mongoose;
+// Define the schema for the Photo model
+let breakingphoto = new Schema({
+  image:{
+    client_id:{
+        type:String,
+        require:true
+    },
+    url: { type:  String     }
+},
+  caption:
+  {
+      type: String
+  },
+  
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+},{
+    collection:'breakingphoto'
+});
+
+module.exports=mongoose.model('breakingphoto', breakingphoto);
