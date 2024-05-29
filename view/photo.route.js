@@ -7,6 +7,8 @@ const photocontroler= require('../controller/photo');
 // POST route for uploading a single photo
 Router.post('/upload/photo', photoupload, photocontroler.photocreate);
 Router.get('/get/photo',photocontroler.getAllPhoto);
+Router.get('/get/photo/:state',photocontroler.getbystate);
+Router.get('/get/photo/district',photocontroler.getbydistrict);
 Router.get('/get/photo/:city',photocontroler.getbycity);
 
 

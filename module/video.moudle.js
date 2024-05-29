@@ -10,14 +10,22 @@ let videoupload = new Schema({
     },
     url: { type:  String     }
 },
-  caption:
+  headline:
   {
       type: String
+  },
+  description:{
+    type:String
   },
 link:{
   type:String
 },
-
+state:{
+  type:String
+},
+district:{
+  type:String
+},
   city:{
     type:String
   },

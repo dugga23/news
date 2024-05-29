@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const {Schema}= mongoose;
 // Define the schema for the Photo model
-let photoupload = new Schema({
+let cardphoto = new Schema({
   image:{
     client_id:{
         type:String,
@@ -15,23 +15,15 @@ let photoupload = new Schema({
       type: String
   },
   description:{
-    type:String
+type:String
   },
-  state:{
-    type:String
-  },
-  district:{
-    type:String
-  },
-  city:{
-    type:String
-  },
+  
   createdAt: {
     type: Date,
     default: Date.now
   }
 },{
-    collection:'photoupload'
+    collection:'cardphoto'
 });
 
-module.exports=mongoose.model('photoupload', photoupload);
+module.exports=mongoose.model('cardphoto', cardphoto);

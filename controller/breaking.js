@@ -10,7 +10,7 @@ exports.breakingphoto = async (req, res) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const { caption } = req.body;
+    const {headline,description } = req.body;
     const image = req.file;
     console.log(image);
 
@@ -24,7 +24,7 @@ exports.breakingphoto = async (req, res) => {
         client_id: img.public_id,
         url: img.url
       },
-      caption
+      headline,description
     });
     console.log(data);
 
@@ -60,13 +60,30 @@ exports.getAllbreaking = async (req, res) => {
         .json({ message: "Failed to fetch dashboard", error: err.message });
     }
 };
+exports.deletePhoto = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedPhoto = await Photo.findByIdAndDelete(id);
+
+    if (!deletedPhoto) {
+      return res.status(404).json({ message: "Photo not found" });
+    }
+
+    return res.json({ message: "photo deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ message: "Failed to delete photo", error: err.message });
+  }
+};
 exports.breakingvideo = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const { caption,link } = req.body;
+    const { headling,description,link} = req.body;
     const video = req.file;
     console.log(video);
 
@@ -83,7 +100,7 @@ exports.breakingvideo = async (req, res) => {
         client_id: uploadedVideo.public_id,
         url: uploadedVideo.url
       },
-     caption,link
+     headline,description,link
     });
     console.log(data);
 
@@ -121,4 +138,22 @@ exports.getAllbreakingvideo = async (req, res) => {
         .status(500)
         .json({ message: "Failed to fetch dashboard", error: err.message });
     }
+};
+
+exports.deleteVideo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedVideo = await Video.findByIdAndDelete(id);
+
+    if (!deletedVideo) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    return res.json({ message: "Video deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ message: "Failed to delete video", error: err.message });
+  }
 };

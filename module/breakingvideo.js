@@ -10,9 +10,12 @@ let breakingvideo = new Schema({
     },
     url: { type:  String     }
 },
-  caption:
+  headline:
   {
       type: String
+  },
+  description:{
+    type:String
   },
   link:{
     type:String

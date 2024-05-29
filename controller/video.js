@@ -1,7 +1,7 @@
 // controllers/videoController.js
 const cloudinary = require('../config/cloudinary');
 const Video = require('../module/video.moudle'); // Assuming you have a Video model
-const Notification = require('../module/allownotification'); // Assuming you have a Notification model
+//const Notification = require('../module/allownotification'); // Assuming you have a Notification model
 
 exports.uploadVideo = async (req, res) => {
   try {
@@ -9,7 +9,7 @@ exports.uploadVideo = async (req, res) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const { caption,link,city } = req.body;
+    const { headline,description,link,state,district,city } = req.body;
     const video = req.file;
     console.log(video);
 
@@ -26,13 +26,13 @@ exports.uploadVideo = async (req, res) => {
         client_id: uploadedVideo.public_id,
         url: uploadedVideo.url
       },
-     caption,link,city
+     headline,description,link,state,district,city
     });
     console.log(data);
 
     // Create a notification
-    const notification = new Notification({ message: 'New video uploaded' });
-    await notification.save();
+    // const notification = new Notification({ message: 'New video uploaded' });
+    // await notification.save();
 
     res.status(200).json({
       message: "Video uploaded successfully",
@@ -65,6 +65,54 @@ exports.getAllvideo = async (req, res) => {
         .json({ message: "Failed to fetch dashboard", error: err.message });
     }
 };
+exports.getbystate = async (req, res) => {
+  try {
+    const { state} = req.query;  // Get the city query parameter
+
+    // Fetch photos from the database, optionally filtered by city
+    let video;
+    if (state) {
+      video = await Video.find({ state });
+    } else {
+      video = await Video.find();
+    }
+
+    // If no photos found, return an empty array
+    if (!video || video.length === 0) {
+      return res.status(404).json({ message: "No photos found" });
+    }
+
+    // Return the photos with their captions
+    return res.json({ message: "Dashboard retrieved successfully", video });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Failed to fetch dashboard", error: err.message });
+  }
+};
+exports.getbydistrict = async (req, res) => {
+  try {
+    const { district } = req.query;  // Get the city query parameter
+
+    // Fetch photos from the database, optionally filtered by city
+    let video;
+    if (district) {
+      video = await Video.find({ district});
+    } else {
+      video = await Video.find();
+    }
+
+    // If no photos found, return an empty array
+    if (!video || video.length === 0) {
+      return res.status(404).json({ message: "No photos found" });
+    }
+
+    // Return the photos with their captions
+    return res.json({ message: "Dashboard retrieved successfully", video });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Failed to fetch dashboard", error: err.message });
+  }
+};
 exports.getbycity = async (req, res) => {
   try {
     const { city } = req.query;  // Get the city query parameter
@@ -87,5 +135,22 @@ exports.getbycity = async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Failed to fetch dashboard", error: err.message });
+  }
+};
+exports.deleteVideo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedVideo = await Video.findByIdAndDelete(id);
+
+    if (!deletedVideo) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    return res.json({ message: "Video deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ message: "Failed to delete video", error: err.message });
   }
 };

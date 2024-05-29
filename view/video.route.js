@@ -7,6 +7,8 @@ const videoController = require('../controller/video'); // Ensure this path is c
 // POST route for uploading a single video
 router.post('/upload/video', upload, videoController.uploadVideo);
 router.get('/get/video',videoController.getAllvideo);
+router.get('/get/video/:state',videoController.getbystate);
+router.get('/get/video/:district',videoController.getbydistrict);
 router.get('/get/video/:city',videoController.getbycity);
 
 module.exports = router;
