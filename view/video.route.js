@@ -10,5 +10,5 @@ router.get('/get/video',videoController.getAllvideo);
 router.get('/get/video/:state',videoController.getbystate);
 router.get('/get/video/:district',videoController.getbydistrict);
 router.get('/get/video/:city',videoController.getbycity);
-
+router.delete('/deletevideo/:id',videoController.deleteVideo);
 module.exports = router;

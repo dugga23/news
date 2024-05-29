@@ -10,6 +10,6 @@ Router.get('/get/photo',photocontroler.getAllPhoto);
 Router.get('/get/photo/:state',photocontroler.getbystate);
 Router.get('/get/photo/district',photocontroler.getbydistrict);
 Router.get('/get/photo/:city',photocontroler.getbycity);
-
+Router.delete('/deletephoto/:id',photocontroler.deletePhoto);
 
 module.exports = Router;
