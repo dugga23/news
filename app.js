@@ -14,6 +14,7 @@ const videoRoutes=require('./view/video.route');
 const cloudinary=require('cloudinary');
 const userRoute=require('./view/user.route');
 const breakingRoute=require('./view/breaking.route');
+const linkRoute=require('./view/link.route');
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3200;
@@ -34,7 +35,7 @@ app.use('/forget-password',forgetpasswordRoutes);
 app.use('/',jwtmiddleware,photoRoutes);
 app.use('/',jwtmiddleware,videoRoutes);
 app.use('/',jwtmiddleware,breakingRoute);
-
+app.use('/',jwtmiddleware,linkRoute);
 cloudinary.config({ 
   cloud_name: process.env.CLOUD_NAME, 
   api_key: process.env.API_KEY, 
