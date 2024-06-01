@@ -24,29 +24,29 @@ exports.createLink = async (req, res) => {
 };
 
 // Function to update a link by ID
-exports.updateLink = async (req, res) => {
-    const linkId = req.params.linkId;
-    const { url } = req.body;
+// exports.updateLink = async (req, res) => {
+//     const linkId = req.params.linkId;
+//     const { url } = req.body;
 
-    try {
-        // Check if URL is provided
-        if (!url) {
-            return res.status(400).json({ message: 'URL is required' });
-        }
+//     try {
+//         // Check if URL is provided
+//         if (!url) {
+//             return res.status(400).json({ message: 'URL is required' });
+//         }
 
-        // Find the link by ID and update it
-        const updatedLink = await Link.findByIdAndUpdate(linkId, { url }, { new: true });
+//         // Find the link by ID and update it
+//         const updatedLink = await Link.findByIdAndUpdate(linkId, { url }, { new: true });
 
-        if (!updatedLink) {
-            return res.status(404).json({ message: 'Link not found' });
-        }
+//         if (!updatedLink) {
+//             return res.status(404).json({ message: 'Link not found' });
+//         }
 
-        return res.json({ message: 'Link updated successfully', link: updatedLink });
-    } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Failed to update link', error: err.message });
-    }
-};
+//         return res.json({ message: 'Link updated successfully', link: updatedLink });
+//     } catch (err) {
+//         console.error(err);
+//         return res.status(500).json({ message: 'Failed to update link', error: err.message });
+//     }
+// };
 
 // Function to delete a link by ID
 exports.deleteLink = async (req, res) => {
