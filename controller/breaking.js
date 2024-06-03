@@ -78,3 +78,20 @@ exports.getbreakingnews = async (req, res) => {
         .json({ message: "Failed to fetch dashboard", error: err.message });
     }
 };
+exports.deletebreakingnews = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedbreakingnews = await File.findByIdAndDelete(id);
+
+    if (!deletedbreakingnews) {
+      return res.status(404).json({ message: "breaking news not found" });
+    }
+
+    return res.json({ message: "breaking news deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ message: "Failed to delete breaking news", error: err.message });
+  }
+};
