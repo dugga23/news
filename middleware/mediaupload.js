@@ -9,15 +9,7 @@ if (!fs.existsSync(uploadDirectory)) {
 }
 
 // Define storage for uploaded photos
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDirectory); // specify the directory where uploaded photos will be stored
-  },
-  filename: function (req, file, cb) {
-    // specify how uploaded files should be named
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
+const storage = multer.diskStorage({});
 
 // Initialize multer with storage options
 const upload = multer({ storage: storage }).single('file'); // 'product' is the field name, and 10 is the max count of files
