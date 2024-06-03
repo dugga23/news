@@ -1,12 +1,4 @@
 const multer = require('multer');
-const fs = require('fs'); 
-
-const uploadDirectory = 'uploads/';
-
-// Check if the directory exists, if not, create it
-if (!fs.existsSync(uploadDirectory)) {
-  fs.mkdirSync(uploadDirectory);
-}
 
 // Define storage for uploaded photos
 const storage = multer.diskStorage({});
