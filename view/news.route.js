@@ -11,6 +11,6 @@ Router.get('/getnews',newscontroller.getAllnews);
 Router.get('/get/:state',newscontroller.getbystate);
 Router.get('/get/:district',newscontroller.getbydistrict);
 Router.get('/get/:city',newscontroller.getbycity);
-Router.delete('/deletephoto/:id',jwtmiddleware,newscontroller.deletenews);
+Router.delete('/deletenews/:id',jwtmiddleware,newscontroller.deletenews);
 
 module.exports = Router;
