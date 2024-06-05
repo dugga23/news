@@ -8,7 +8,7 @@ exports.news = async (req, res) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const { headline, description, link } = req.body;
+    const { headline, description, link,state,district,city } = req.body;
     const file = req.file;
     console.log(file);
 
@@ -37,7 +37,8 @@ exports.news = async (req, res) => {
       },
       headline,
       description,
-      link
+      link,
+      state,district,city
     });
     console.log(data);
 
