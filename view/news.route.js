@@ -9,8 +9,8 @@ const jwtmiddleware=require('../middleware/jwtmiddleware')
 Router.post('/news', jwtmiddleware,photoupload, newscontroller.news);
 Router.get('/getnews',newscontroller.getAllnews);
 Router.get('/get/:state',newscontroller.getbystate);
-Router.get('/get/:district',newscontroller.getbydistrict);
-Router.get('/get/:city',newscontroller.getbycity);
+Router.get('/getDist/:district',newscontroller.getbydistrict);
+Router.get('/getCity/:city',newscontroller.getbycity);
 Router.delete('/deletenews/:id',jwtmiddleware,newscontroller.deletenews);
 
 module.exports = Router;

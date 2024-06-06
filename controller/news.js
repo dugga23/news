@@ -8,7 +8,7 @@ exports.news = async (req, res) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const { headline, description, link,state,district,city } = req.body;
+    const { headline, description, link, state, district, city } = req.body;
     const file = req.file;
     console.log(file);
 
@@ -38,7 +38,7 @@ exports.news = async (req, res) => {
       headline,
       description,
       link,
-      state,district,city
+      state, district, city
     });
     console.log(data);
 
@@ -61,46 +61,34 @@ exports.news = async (req, res) => {
   }
 };
 
-
 exports.getAllnews = async (req, res) => {
   try {
-      // Fetch all photos from the database
-      const file = await File.find();
-   
-  
-      // If no photos found, return an empty array
-      if (!file || file.length === 0) {
-        return res.status(404).json({ message: "No news found" });
-      }
-  
-      // Return the photos with their captions
-      return res.json({ message: "Dashboard retrieved successfully", file});
-    } catch (err) {
-      console.error(err);
-      return res
-        .status(500)
-        .json({ message: "Failed to fetch dashboard", error: err.message });
+    // Fetch all Files from the database
+    const file = await File.find();
+
+
+    // If no Files found, return an empty array
+    if (!file || file.length === 0) {
+      return res.status(404).json({ message: "No news found" });
     }
+
+    // Return the Files with their captions
+    return res.json({ message: "Dashboard retrieved successfully", file });
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ message: "Failed to fetch dashboard", error: err.message });
+  }
 };
 exports.getbystate = async (req, res) => {
   try {
-    const { state } = req.query;  // Get the city query parameter
-
-    // Fetch photos from the database, optionally filtered by city
-    let photos;
-    if (state) {
-      photos = await Photo.find({ state });
-    } else {
-      photos = await Photo.find();
+    const state = req.params.state
+    if (!state) {
+      res.status(400).send("state not found");
     }
-
-    // If no photos found, return an empty array
-    if (!photos || photos.length === 0) {
-      return res.status(404).json({ message: "No photos found" });
-    }
-
-    // Return the photos with their captions
-    return res.json({ message: "Dashboard retrieved successfully", photos });
+    const result = await File.findOne({ state: state });
+    res.status(200).json(result)
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Failed to fetch dashboard", error: err.message });
@@ -108,23 +96,13 @@ exports.getbystate = async (req, res) => {
 };
 exports.getbydistrict = async (req, res) => {
   try {
-    const { district } = req.query;  // Get the city query parameter
+    const district  = req.params.district;  // Get the city query parameter
 
-    // Fetch photos from the database, optionally filtered by city
-    let photos;
-    if (district) {
-      photos = await Photo.find({ district });
-    } else {
-      photos = await Photo.find();
+    if (!district) {
+      res.status(400).send("district not found");
     }
-
-    // If no photos found, return an empty array
-    if (!photos || photos.length === 0) {
-      return res.status(404).json({ message: "No photos found" });
-    }
-
-    // Return the photos with their captions
-    return res.json({ message: "Dashboard retrieved successfully", photos });
+    const resultD = await File.findOne({ district: district });
+    res.status(200).json(resultD);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Failed to fetch dashboard", error: err.message });
@@ -132,23 +110,13 @@ exports.getbydistrict = async (req, res) => {
 };
 exports.getbycity = async (req, res) => {
   try {
-    const { city } = req.query;  // Get the city query parameter
-
-    // Fetch photos from the database, optionally filtered by city
-    let photos;
-    if (city) {
-      photos = await Photo.find({ city });
-    } else {
-      photos = await Photo.find();
+    const city  = req.params.city; 
+    if (!city) {
+      res.status(400).send("city not found");
     }
-
-    // If no photos found, return an empty array
-    if (!photos || photos.length === 0) {
-      return res.status(404).json({ message: "No photos found" });
-    }
-
-    // Return the photos with their captions
-    return res.json({ message: "Dashboard retrieved successfully", photos });
+    const resultCity = await File.findOne({ city: city });
+    res.status(200).json(resultCity)
+    
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Failed to fetch dashboard", error: err.message });
@@ -158,17 +126,17 @@ exports.getbycity = async (req, res) => {
 exports.deletenews = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedPhoto = await Photo.findByIdAndDelete(id);
+    const deletedFile = await File.findByIdAndDelete(id);
 
-    if (!deletedPhoto) {
-      return res.status(404).json({ message: "Photo not found" });
+    if (!deletedFile) {
+      return res.status(404).json({ message: "File not found" });
     }
 
-    return res.json({ message: "Photo deleted successfully" });
+    return res.json({ message: "File deleted successfully" });
   } catch (err) {
     console.error(err);
     return res
       .status(500)
-      .json({ message: "Failed to delete Photo", error: err.message });
+      .json({ message: "Failed to delete File", error: err.message });
   }
 };
