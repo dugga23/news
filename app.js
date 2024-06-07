@@ -16,6 +16,9 @@ const userRoute=require('./view/user.route');
 const breakingRoute=require('./view/breaking.route');
 const linkRoute=require('./view/link.route');
 const cardRoute=require('./view/card.route');
+const entertainment=require('./view/entertainment');
+const education=require('./view/education');
+const technology=require('./view/technology');
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3200;
@@ -34,8 +37,10 @@ app.use('/login', loginRoutes);
 app.use('/',otpRoutes);
 app.use('/forget-password',forgetpasswordRoutes);
 app.use('/',newsRoutes);
-//app.use('/',videoRoutes);
+app.use('/',entertainment);
+app.use('/',education);
 app.use('/',breakingRoute);
+app.use('/',technology);
 app.use('/',linkRoute);
 cloudinary.config({ 
   cloud_name: process.env.CLOUD_NAME, 
