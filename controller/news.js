@@ -81,45 +81,19 @@ exports.getAllnews = async (req, res) => {
       .json({ message: "Failed to fetch dashboard", error: err.message });
   }
 };
-exports.getbystate = async (req, res) => {
-  try {
-    const state = req.params.state
-    if (!state) {
-      res.status(400).send("state not found");
-    }
-    const result = await File.findOne({ state: state });
-    res.status(200).json(result)
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Failed to fetch dashboard", error: err.message });
-  }
-};
-exports.getbydistrict = async (req, res) => {
-  try {
-    const district  = req.params.district;  // Get the city query parameter
-
-    if (!district) {
-      res.status(400).send("district not found");
-    }
-    const resultD = await File.findOne({ district: district });
-    res.status(200).json(resultD);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Failed to fetch dashboard", error: err.message });
-  }
-};
-exports.getbycity = async (req, res) => {
-  try {
-    const city  = req.params.city; 
-    if (!city) {
-      res.status(400).send("city not found");
-    }
-    const resultCity = await File.findOne({ city: city });
-    res.status(200).json(resultCity)
-    
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Failed to fetch dashboard", error: err.message });
+exports.search=async(req,res)=>{
+  try{
+    const query=req.query.news;
+    const n=await File.find({
+      $or:[
+        {state:{$regex:query,$options:'i'}}, 
+        {district:{$regex:query,$options:'i'}},
+         {city:{$regex:query,$options:'i'}},
+      ]
+    },{file:1,headline:1,description:1}).exec();
+    res.json(n);
+  }catch(err){
+    res.status(500).json({message:err.message});
   }
 };
 
