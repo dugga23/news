@@ -19,6 +19,7 @@ const cardRoute=require('./view/card.route');
 const entertainment=require('./view/entertainment');
 const education=require('./view/education');
 const technology=require('./view/technology');
+const election=require('./view/election');
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3200;
@@ -42,6 +43,7 @@ app.use('/',education);
 app.use('/',breakingRoute);
 app.use('/',technology);
 app.use('/',linkRoute);
+app.use('/',election);
 cloudinary.config({ 
   cloud_name: process.env.CLOUD_NAME, 
   api_key: process.env.API_KEY, 

@@ -1,5 +1,5 @@
 const cloudinary = require('../config/cloudinary');
-const news= require('../module/entertainment');
+const entertainmentNews= require('../module/entertainment');
 //const Notification = require('../module/allownotification');
 
 exports.add = async (req, res) => {
@@ -30,7 +30,7 @@ exports.add = async (req, res) => {
     console.log(uploadedfile, "this is file");
 
     // Save file details in the database
-    const data = await news.create({
+    const data = await entertainmentNews.create({
       file: { // Ensure this matches your schema
         client_id: uploadedfile.public_id,
         url: uploadedfile.secure_url // Use secure_url to avoid mixed content issues
@@ -64,7 +64,7 @@ exports.add = async (req, res) => {
 exports.get = async (req, res) => {
   try {
     // Fetch all Files from the database
-    const file = await news.find();
+    const file = await entertainmentNews.find();
 
 
     // If no Files found, return an empty array
@@ -81,7 +81,23 @@ exports.get = async (req, res) => {
       .json({ message: "Failed to fetch dashboard", error: err.message });
   }
 };
-// exports.search = async (req, res) => {
+exports.search=async(req,res)=>{
+
+  
+  try{
+    const query=req.query.news;
+    const Enews = await entertainmentNews.find({
+      $or:[
+        { category: { $regex: query, $options: 'i' } },  // Ensure $options is defined
+      ]
+    },
+    { file: 1, headline: 1, description: 1}).exec();
+    
+    res.json(Enews);
+  }catch(err){
+    res.status(500).json({message:err.message});
+  }
+};
 //     try {
 //       const query = req.query.news;
   
@@ -118,7 +134,7 @@ exports.get = async (req, res) => {
 exports.delete = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedFile = await news.findByIdAndDelete(id);
+    const deletedFile = await entertainmentNews.findByIdAndDelete(id);
 
     if (!deletedFile) {
       return res.status(404).json({ message: "File not found" });

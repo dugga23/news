@@ -6,7 +6,7 @@ const jwtmiddleware=require('../middleware/jwtmiddleware');
 
 Router.post('/add', jwtmiddleware,middleware, filecontroler.add);
 Router.get('/get',filecontroler.get);
-//Router.get('/search',filecontroler.search);
+Router.get('/esearch',filecontroler.search);
 Router.delete('/delete/:id',jwtmiddleware,filecontroler.delete);
 
 module.exports=Router;
