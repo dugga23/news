@@ -78,6 +78,24 @@ exports.getbreakingnews = async (req, res) => {
         .json({ message: "Failed to fetch dashboard", error: err.message });
     }
 };
+exports.getonebreakingnews= async (req, res) => {
+  try {
+    const Id = req.params.Id;
+    if (Id) {
+      const product = await File.findById(Id);
+      if (!product) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+      return res.status(200).json(product);
+    }
+
+    const products = await File.find();
+    return res.status(200).json(products);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Failed to fetch products', error: err.message });
+  }
+};
 exports.deletebreakingnews = async (req, res) => {
   try {
     const { id } = req.params;
