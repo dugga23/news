@@ -60,6 +60,25 @@ exports.getAllcard = async (req, res) => {
         .json({ message: "Failed to fetch dashboard", error: err.message });
     }
 };
+exports.getProduct = async (req, res) => {
+  try {
+    const Id = req.params.Id;
+    if (Id) {
+      const product = await Photo.findById(Id);
+      if (!product) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+      return res.status(200).json(product);
+    }
+
+    const products = await Photo.find();
+    return res.status(200).json(products);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: 'Failed to fetch products', error: err.message });
+  }
+};
+
 exports.deleteCard = async (req, res) => {
   try {
     const { id } = req.params;
